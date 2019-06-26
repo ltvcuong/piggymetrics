@@ -1,6 +1,6 @@
-logging:
-  level:
-    .: DEBUG
+# logging:
+#   level:
+#     .: DEBUG
 
 hystrix:
   command:
