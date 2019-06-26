@@ -1,0 +1,288 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: registry
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: registry
+    spec:
+      containers:
+      - name: registry-pod
+        image: ltvcuong/pm-registry:1.0.0
+        env:
+        - name: CONFIG_SERVICE_PASSWORD
+          value: "password@123"
+        ports:
+        - containerPort: 8761
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: gateway
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+      - name: gateway-pod
+        image: ltvcuong/pm-gateway:1.0.0
+        env:
+        - name: CONFIG_SERVICE_PASSWORD
+          value: "password@123"
+        - name: MONGODB_PASSWORD
+          value: "password@123"
+        - name: NOTIFICATION_SERVICE_PASSWORD
+          value: "password@123"
+        - name: STATISTICS_SERVICE_PASSWORD
+          value: "password@123"
+        - name: ACCOUNT_SERVICE_PASSWORD
+          value: "password@123"
+        ports:
+        - containerPort: 4000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: auth
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+      - name: auth-pod
+        image: ltvcuong/pm-auth-service:1.0.0
+        env:
+        - name: CONFIG_SERVICE_PASSWORD
+          value: "password@123"
+        - name: MONGODB_PASSWORD
+          value: "password@123"
+        - name: NOTIFICATION_SERVICE_PASSWORD
+          value: "password@123"
+        - name: STATISTICS_SERVICE_PASSWORD
+          value: "password@123"
+        - name: ACCOUNT_SERVICE_PASSWORD
+          value: "password@123"
+        ports:
+        - containerPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: account
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: account
+    spec:
+      containers:
+      - name: account-pod
+        image: ltvcuong/pm-account-service:1.0.0
+        env:
+        - name: CONFIG_SERVICE_PASSWORD
+          value: "password@123"
+        - name: MONGODB_PASSWORD
+          value: "password@123"
+        - name: NOTIFICATION_SERVICE_PASSWORD
+          value: "password@123"
+        - name: STATISTICS_SERVICE_PASSWORD
+          value: "password@123"
+        - name: ACCOUNT_SERVICE_PASSWORD
+          value: "password@123"
+        ports:
+        - containerPort: 6000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statistics 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: statistics
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: statistics
+    spec:
+      containers:
+      - name: statistics-pod
+        image: ltvcuong/pm-statistics-service:1.0.0
+        env:
+        - name: CONFIG_SERVICE_PASSWORD
+          value: "password@123"
+        - name: MONGODB_PASSWORD
+          value: "password@123"
+        - name: NOTIFICATION_SERVICE_PASSWORD
+          value: "password@123"
+        - name: STATISTICS_SERVICE_PASSWORD
+          value: "password@123"
+        - name: ACCOUNT_SERVICE_PASSWORD
+          value: "password@123"
+        ports:
+        - containerPort: 7000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: notification
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: notification
+    spec:
+      containers:
+      - name: notification-pod
+        image: ltvcuong/pm-notification-service:1.0.0
+        env:
+        - name: CONFIG_SERVICE_PASSWORD
+          value: "password@123"
+        - name: MONGODB_PASSWORD
+          value: "password@123"
+        - name: NOTIFICATION_SERVICE_PASSWORD
+          value: "password@123"
+        - name: STATISTICS_SERVICE_PASSWORD
+          value: "password@123"
+        - name: ACCOUNT_SERVICE_PASSWORD
+          value: "password@123"
+        ports:
+        - containerPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monitoring 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: monitoring
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: monitoring
+    spec:
+      containers:
+      - name: monitoring-pod
+        image: ltvcuong/pm-monitoring:1.0.0
+        env:
+        - name: CONFIG_SERVICE_PASSWORD
+          value: "password@123"
+        - name: MONGODB_PASSWORD
+          value: "password@123"
+        - name: NOTIFICATION_SERVICE_PASSWORD
+          value: "password@123"
+        - name: STATISTICS_SERVICE_PASSWORD
+          value: "password@123"
+        - name: ACCOUNT_SERVICE_PASSWORD
+          value: "password@123"
+        ports:
+        - containerPort: 9000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turbine 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: turbine
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: turbine
+    spec:
+      containers:
+      - name: turbine-pod
+        image: ltvcuong/pm-turbine-stream-service:1.0.0
+        env:
+        - name: CONFIG_SERVICE_PASSWORD
+          value: "password@123"
+        - name: MONGODB_PASSWORD
+          value: "password@123"
+        - name: NOTIFICATION_SERVICE_PASSWORD
+          value: "password@123"
+        - name: STATISTICS_SERVICE_PASSWORD
+          value: "password@123"
+        - name: ACCOUNT_SERVICE_PASSWORD
+          value: "password@123"
+        ports:
+        - containerPort: 8989
+

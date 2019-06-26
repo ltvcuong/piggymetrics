@@ -1,0 +1,182 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq 
+  labels:
+    app: rabbitmq-svc
+spec:
+  ports:
+  - port: 5672
+    protocol: TCP
+  selector:
+    app: rabbitmq
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config
+  labels:
+    app: config-svc
+spec:
+  ports:
+  - port: 8888
+    protocol: TCP
+  selector:
+    app: config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-svc
+  labels:
+    app: piggy-metrics
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 4000
+  selector:
+    app: gateway
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry
+  labels:
+    app: registry-service
+spec:
+  ports:
+  - port: 8761
+    protocol: TCP
+  selector:
+    app: registry
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: account-service
+  labels:
+    app: account-service
+spec:
+  ports:
+  - port: 6000
+    protocol: TCP
+  selector:
+    app: account
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: account-mongodb
+  labels:
+    app: account-mongodb
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+  selector:
+    app: account-mongodb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-mongodb
+  labels:
+    app: auth-mongodb
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+  selector:
+    app: auth-mongodb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: statistics-mongodb
+  labels:
+    app: statistics-mongodb
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+  selector:
+    app: statistics-mongodb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-mongodb
+  labels:
+    app: notification-mongodb
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+  selector:
+    app: notification-mongodb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  labels:
+    app: auth-service
+spec:
+  ports:
+  - port: 5000
+    protocol: TCP
+  selector:
+    app: auth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: statistics-service
+  labels:
+    app: statistics-service
+spec:
+  ports:
+  - port: 7000
+    protocol: TCP
+  selector:
+    app: statistics
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  labels:
+    app: notification-service
+spec:
+  ports:
+  - port: 8000
+    protocol: TCP
+  selector:
+    app: notification
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: monitoring-service
+  labels:
+    app: monitoring-service
+spec:
+  ports:
+  - port: 9000
+    protocol: TCP
+  selector:
+    app: monitoring
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: turbine-stream-service
+  labels:
+    app: turbine-stream-service
+spec:
+  ports:
+  - port: 8989
+    protocol: TCP
+  selector:
+    app: turbine

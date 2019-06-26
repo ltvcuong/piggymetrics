@@ -1,0 +1,182 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: rabbitmq
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq-pod
+        image: rabbitmq:3-management
+        ports:
+        - containerPort: 15672
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: config
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: config
+    spec:
+      containers:
+      - name: config-pod
+        image: ltvcuong/pm-config:1.0.1
+        env:
+        - name: CONFIG_SERVICE_PASSWORD
+          value: "password@123"
+        ports:
+        - containerPort: 8888
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-mongodb 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: auth-mongodb
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: auth-mongodb
+    spec:
+      containers:
+      - name: auth-mongodb-pod
+        image: ltvcuong/pm-mongodb:1.0.0
+        env:
+        - name: CONFIG_SERVICE_PASSWORD
+          value: "password@123"
+          name: MONGODB_PASSWORD
+          value: "password@123"
+        ports:
+        - containerPort: 27017
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-mongodb 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: account-mongodb
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: account-mongodb
+    spec:
+      containers:
+      - name: account-mongodb-pod
+        image: ltvcuong/pm-mongodb:1.0.0
+        env:
+        - name: CONFIG_SERVICE_PASSWORD
+          value: "password@123"
+          name: MONGODB_PASSWORD
+          value: "password@123"
+        ports:
+        - containerPort: 27017
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statistics-mongodb 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: statistics-mongodb
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: statistics-mongodb
+    spec:
+      containers:
+      - name: statistics-mongodb-pod
+        image: ltvcuong/pm-mongodb:1.0.0
+        env:
+        - name: CONFIG_SERVICE_PASSWORD
+          value: "password@123"
+          name: MONGODB_PASSWORD
+          value: "password@123"
+        ports:
+        - containerPort: 27017
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-mongodb 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: notification-mongodb
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: notification-mongodb
+    spec:
+      containers:
+      - name: notification-mongodb-pod
+        image: ltvcuong/pm-mongodb:1.0.0
+        env:
+        - name: CONFIG_SERVICE_PASSWORD
+          value: "password@123"
+          name: MONGODB_PASSWORD
+          value: "password@123"
+        ports:
+        - containerPort: 27017
+
+
+
+
